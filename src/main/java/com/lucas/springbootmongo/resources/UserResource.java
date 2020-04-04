@@ -41,8 +41,7 @@ public class UserResource {
     public ResponseEntity<UserDTO> findById(@PathVariable String id){
 		
 		User user = userService.findById(id);
-		return ResponseEntity.ok().body(new UserDTO(user));
-		
+		return ResponseEntity.ok().body(new UserDTO(user));		
  	
     }
 	
@@ -56,6 +55,17 @@ public class UserResource {
 
 		
 	}
+	
+
+	@RequestMapping(method = RequestMethod.DELETE,value = "/deleteById/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id){
+		
+		userService.delete(id);
+		return ResponseEntity.noContent().build();
+		
+ 	
+    }
+	
 
 
 }
