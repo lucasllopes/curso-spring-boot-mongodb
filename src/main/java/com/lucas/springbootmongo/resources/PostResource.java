@@ -1,14 +1,18 @@
 package com.lucas.springbootmongo.resources;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lucas.springbootmongo.domain.Post;
+import com.lucas.springbootmongo.resources.util.URL;
 import com.lucas.springbootmongo.services.PostService;
 
 
@@ -25,6 +29,15 @@ public class PostResource {
 		
 		Post post = postService.findById(id);
 		return ResponseEntity.ok().body(post);		
+ 	
+    }
+	
+	@RequestMapping(method = RequestMethod.GET,value = "/titlesearch")
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text",defaultValue = "") String text){ // o value 'text' e referente ao nome do atributo e nao ao tipo
+		text = URL.decodeParam(text); // decodificando o parametro
+		List<Post> listPosts = postService.findByTitle(text);
+
+		return ResponseEntity.ok().body(listPosts);		
  	
     }
 
